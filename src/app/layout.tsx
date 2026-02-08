@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-// 👇 HIER ist dein korrigierter Import
+// 👇 WICHTIG: Genau dieser Pfad!
 import Header from "@/src/components/Header";
+import Footer from "@/src/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -17,7 +13,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Imkerverein Neustadt",
-  description: "Offizielle Website des Imkervereins",
+  description: "Offizielle Website",
 };
 
 export default function RootLayout({
@@ -28,13 +24,11 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
       >
-        {/* 👇 1. Der Header wird hier eingefügt */}
         <Header />
-
-        {/* 2. Der Seiteninhalt folgt danach */}
-        <main>{children}</main>
+        <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );
