@@ -13,34 +13,7 @@ export const siteConfig = {
     { label: "Über uns", href: "/ueber-uns" },
     { label: "Kontakt", href: "/kontakt" },
     { label: "Mitglied werden", href: "/mitglied-werden" },
-    { label: "Lehrgänge", href: "/kurse" },
-    { label: "Datenschutz", href: "/datenschutz" },
-    { label: "Impressum", href: "/impressum" },
-  ],
-  vorstand: [
-    {
-      role: "1. Vorstandsmitglied",
-      namePerson: "Sven Wunder",
-      email: "vorstand@imkerverein-neustadt.de",
-      telefon: "05072123456",
-    },
-    {
-      role: "2. Vorstandsmitglied",
-      namePerson: "Jürgen Hochegger",
-      email: "vorstand@imkerverein-neustadt.de",
-      phone: "05072123456",
-    },
-    {
-      role: "Kassenwart",
-      namePerson: "Jürgen Hochegger",
-      email: "vorstand@imkerverein-neustadt.de",
-      phone: "05072123456",
-    },
-    {
-      role: "Medienwart",
-      namePerson: "Tjark Radewaldt",
-      email: "vorstand@imkerverein-neustadt.de",
-      phone: "05072123456",
-    },
+    { label: "Termine", href: "/termine" },
+    { label: "Imker-Lehrgang", href: "/lehrgaenge" },
   ],
 };

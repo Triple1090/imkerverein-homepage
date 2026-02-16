@@ -32,15 +32,32 @@ export function Hero() {
         </div>
 
         {/* Rechte Spalte: Bild */}
-        <div className="relative animate-in slide-in-from-right-10 duration-700 delay-200">
+        {/* 'group' ist wichtig, damit wir beim Hovern des Containers etwas auslösen können */}
+        <div className="relative group animate-in slide-in-from-right-10 duration-700 delay-200">
           <Image
             src="/hero-biene.jpg"
-            alt="Eine Biene auf einer gelben Blüte"
+            alt="Eine Honigbiene auf einer gelben Blüte"
             width={600}
             height={400}
-            className="rounded-2xl shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-500 object-cover"
+            className="rounded-2xl shadow-2xl rotate-2 group-hover:rotate-0 transition-transform duration-500 object-cover"
             priority
           />
+
+          {/* 👇 Der Bildnachweis (Erscheint nur bei Hover) */}
+          <div className="absolute bottom-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <span className="bg-black/60 backdrop-blur-md text-white text-[10px] px-3 py-1.5 rounded-full shadow-sm">
+              Foto von{" "}
+              <a
+                href="https://unsplash.com/de/fotos/honigbiene-sitzt-auf-gelber-blume-yxXpjF-RrnA?utm_source=unsplash&utm_medium=referral&utm_content=creditShareLink"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-amber-300 underline decoration-white/50 underline-offset-2"
+              >
+                Kai Wenzel
+              </a>{" "}
+              auf Unsplash
+            </span>
+          </div>
         </div>
       </div>
     </section>
