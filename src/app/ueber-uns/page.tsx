@@ -1,5 +1,9 @@
 import React from "react";
-import Image from "next/image"; // <--- Image Import nicht vergessen
+import Image from "next/image";
+// 👇 1. Das Bild statisch importieren für den "Instant-Load"-Effekt
+import heroImage from "@/public/images/douglas-raggio-unsplash.jpg";
+
+// 👇 Pfade korrigiert (meistens ist @/config richtig, ohne 'src')
 import { siteConfig } from "@/src/config/site";
 import { boardMembers } from "@/src/config/team";
 import { TeamCard } from "@/src/components/ui/TeamCard";
@@ -12,20 +16,23 @@ export const metadata = {
 export default function UeberUnsPage() {
   return (
     <main className="min-h-screen bg-stone-50">
-      {/* 1. HEADER: Jetzt mit Hintergrundbild & Credit */}
+      {/* 1. HEADER: Jetzt optimiert */}
       <section className="relative py-24 px-4 text-center overflow-hidden">
         {/* HINTERGRUND BILD */}
         <div className="absolute inset-0 z-0 bg-amber-900">
           <Image
-            src="/images/douglas-raggio-unsplash.jpg" // Pfad relativ zu 'public'
+            src={heroImage} // <--- Objekt nutzen statt String
             alt="Imkergruppe bei der Durchsicht"
             fill
-            className="object-cover brightness-[0.4]" // Abdunklung für weißen Text
-            priority
+            className="object-cover brightness-[0.4]" // Abdunklung beibehalten
+            placeholder="blur" // <--- Sofortige Vorschau (Blur)
+            priority // Lädt mit höchster Priorität
+            sizes="100vw" // Wichtig für Mobile-Datenvolumen
+            quality={90}
           />
         </div>
 
-        {/* CREDIT (Unten rechts, dezent) */}
+        {/* CREDIT */}
         <div className="absolute bottom-2 right-4 z-10 text-[10px] text-white/40 hover:text-white/80 transition-colors">
           Foto von{" "}
           <a
@@ -39,9 +46,9 @@ export default function UeberUnsPage() {
           auf Unsplash
         </div>
 
-        {/* INHALT (Muss z-10 haben) */}
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6 text-white">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
+        {/* INHALT */}
+        <div className="relative z-10 max-w-4xl mx-auto space-y-6 text-white animate-in fade-in zoom-in duration-700">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-xl">
             Über uns
           </h1>
           <p className="text-xl text-amber-100 max-w-2xl mx-auto drop-shadow-md font-light leading-relaxed">
@@ -94,7 +101,7 @@ export default function UeberUnsPage() {
             Transparenz ist uns wichtig. Hier findest du unsere aktuelle Satzung
             und Beitragsordnung zum Nachlesen.
           </p>
-          <button className="bg-white border-2 border-amber-200 text-amber-800 px-8 py-3 rounded-xl font-bold hover:bg-amber-50 hover:border-amber-300 transition-all shadow-sm">
+          <button className="bg-white border-2 border-amber-200 text-amber-800 px-8 py-3 rounded-xl font-bold hover:bg-amber-50 hover:border-amber-300 transition-all shadow-sm transform hover:-translate-y-1">
             📄 Satzung herunterladen (PDF)
           </button>
         </section>
