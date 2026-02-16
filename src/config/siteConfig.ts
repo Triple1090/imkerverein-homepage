@@ -19,29 +19,28 @@ export const siteConfig = {
   ],
   vorstand: [
     {
-      vorsitzEins: "Sven Wunder",
+      role: "1. Vorstandsmitglied",
+      namePerson: "Sven Wunder",
       email: "vorstand@imkerverein-neustadt.de",
       telefon: "05072123456",
     },
     {
-      vorsitzZwei: "Jürgen Hochegger",
+      role: "2. Vorstandsmitglied",
+      namePerson: "Jürgen Hochegger",
       email: "vorstand@imkerverein-neustadt.de",
+      phone: "05072123456",
     },
     {
-      kassenwart: "Herr Kassenwart",
-      email: "kassenwart@imkerverein-neustadt.de",
+      role: "Kassenwart",
+      namePerson: "Jürgen Hochegger",
+      email: "vorstand@imkerverein-neustadt.de",
+      phone: "05072123456",
     },
     {
-      schriftfuehrer: "Herr Schriftfuehrer",
-      email: "schriftfuehrer@imkerverein-neustadt.de",
-    },
-    {
-      medienwart: "Tjark Radewaldt",
-      email: "medienwart@imkerverein-neustadt.de",
-    },
-    {
-      honigobmann: "Herr Honigobmann",
-      email: "honigobmann@imkerverein-neustadt.de",
+      role: "Medienwart",
+      namePerson: "Tjark Radewaldt",
+      email: "vorstand@imkerverein-neustadt.de",
+      phone: "05072123456",
     },
   ],
 };
