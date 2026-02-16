@@ -1,63 +1,11 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import Script from "next/script";
+import { useContactForm } from "@/src/hooks/useContactForm";
 
 export default function KontaktPage() {
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-  const formRef = useRef<HTMLFormElement>(null);
-
-  // Diese Funktion wird aufgerufen, wenn der User auf "Absenden" klickt
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("loading");
-
-    const form = e.currentTarget;
-
-    try {
-      // 1. Botpoison Ticket generieren
-      // Wir greifen auf das Botpoison-Objekt zu, das durch das Script geladen wurde
-      // @ts-ignore (Botpoison wird global über das Script geladen)
-      const botpoison = new window.Botpoison({
-        publicKey: "pk_13384f6f-9567-422d-a34e-a56fa1dabee6", // HIER deinen Key eintragen
-      });
-
-      // Die Lösung der Challenge anfordern
-      const { solution } = await botpoison.challenge();
-
-      // 2. Daten sammeln
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData);
-
-      // 3. Lösung zum Datenpaket hinzufügen (Formspark erkennt das Feld '_botpoison')
-      const payload = {
-        ...data,
-        _botpoison: solution,
-      };
-
-      // 4. An Formspark senden
-      const response = await fetch("https://submit-form.com/huKidvzeo", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-        setStatus("success");
-        form.reset();
-      } else {
-        setStatus("error");
-      }
-    } catch (error) {
-      console.error("Fehler beim Versand:", error);
-      setStatus("error");
-    }
-  }
+  const { status, submitForm, reset } = useContactForm();
 
   if (status === "success") {
     return (
@@ -70,8 +18,8 @@ export default function KontaktPage() {
           Vielen Dank. Wir haben Ihre Nachricht erhalten und summen bald zurück.
         </p>
         <button
-          onClick={() => setStatus("idle")}
-          className="mt-8 bg-amber-600 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-all shadow-md"
+          onClick={reset}
+          className="mt-8 bg-amber-600 text-white px-6 py-2 rounded-full hover:bg-amber-700 transition-all shadow-md font-bold"
         >
           Neue Nachricht schreiben
         </button>
@@ -81,25 +29,22 @@ export default function KontaktPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-16 px-4">
-      {/* Botpoison Script laden */}
+      {/* Das Script muss hier geladen werden, damit window.Botpoison verfügbar wird */}
       <Script
         src="https://unpkg.com/@botpoison/browser"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
 
-      <div className="mb-10">
-        <h1 className="text-4xl font-bold text-amber-900 mb-4 text-center">
-          Kontakt
-        </h1>
-        <p className="text-center text-gray-600">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-bold text-amber-900 mb-4">Kontakt</h1>
+        <p className="text-gray-600">
           Egal ob Fragen zur Imkerei oder Interesse an einer Mitgliedschaft –
           wir freuen uns auf Ihre Nachricht.
         </p>
       </div>
 
       <form
-        onSubmit={handleSubmit}
-        ref={formRef}
+        onSubmit={submitForm}
         className="bg-white p-8 rounded-3xl border border-amber-100 shadow-xl space-y-6"
       >
         <div className="grid md:grid-cols-2 gap-6">
@@ -183,7 +128,6 @@ export default function KontaktPage() {
         >
           {status === "loading" ? (
             <>
-              {/* Das ist ein einfacher CSS-Spinner */}
               <svg
                 className="animate-spin h-5 w-5 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +156,7 @@ export default function KontaktPage() {
         </button>
 
         {status === "error" && (
-          <p className="text-red-500 text-center font-medium">
+          <p className="text-red-500 text-center font-medium bg-red-50 p-3 rounded-lg border border-red-100">
             Da ist etwas schiefgelaufen. Bitte versuchen Sie es später erneut.
           </p>
         )}
