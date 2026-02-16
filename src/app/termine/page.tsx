@@ -2,8 +2,8 @@ import React from "react";
 import Image from "next/image";
 // 👇 1. Das ist der Turbo-Boost: Bild importieren!
 import heroImage from "@/public/images/vitaly-gariev-unsplash.jpg";
-import { events } from "@/config/events";
-import { EventCard } from "@/components/ui/EventCard";
+import { events } from "@/src/config/events";
+import { EventCard } from "@/src/components/ui/EventCard";
 
 export const metadata = {
   title: "Termine & Veranstaltungen | Imkerverein Neustadt",
