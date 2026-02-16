@@ -14,6 +14,8 @@ export const siteConfig = {
     { label: "Kontakt", href: "/kontakt" },
     { label: "Mitglied werden", href: "/mitglied-werden" },
     { label: "Lehrgänge", href: "/kurse" },
+    { label: "Datenschutz", href: "/datenschutz" },
+    { label: "Impressum", href: "/impressum" },
   ],
   vorstand: [
     {

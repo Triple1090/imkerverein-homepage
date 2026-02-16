@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation"; // Hook für die aktuelle URL
-import { siteConfig } from "../config/site"; // Unsere Datenquelle
+import { siteConfig } from "../config/siteConfig";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -92,7 +92,7 @@ export default function Header() {
 
       {/* Mobile Menu Overlay (Nur sichtbar wenn isMenuOpen === true) */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-amber-100 shadow-xl animate-in slide-in-from-top-5">
+        <div className="md:hidden absolute top-20 left-0 w-full h-[calc(100dvh-5rem)] bg-white border-b border-amber-100 shadow-xl animate-in slide-in-from-top-5 overflow-y-auto">
           <ul className="flex flex-col p-6 gap-4 text-center">
             {siteConfig.nav.map((item) => (
               <li key={item.href}>
