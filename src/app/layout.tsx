@@ -7,7 +7,7 @@ import Header from "../components/sections/Header";
 import Footer from "../components/sections/Footer";
 
 // 👇 NEU: Wir laden die Config für zentrale SEO-Daten
-import { siteConfig } from "../config/siteConfig";
+import { siteConfig } from "../config/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

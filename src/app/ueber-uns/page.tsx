@@ -1,5 +1,5 @@
 import React from "react";
-import { siteConfig } from "@/src/config/siteConfig";
+import { siteConfig } from "@/src/config/site";
 
 export default function UeberUnsPage() {
   return (

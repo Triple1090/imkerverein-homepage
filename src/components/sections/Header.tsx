@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation"; // Hook für die aktuelle URL
-import { siteConfig } from "@/src/config/siteConfig";
+import { siteConfig } from "@/src/config/site";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
