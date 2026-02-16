@@ -1,14 +1,22 @@
+"use client"; // Wichtig: Macht die Komponente interaktiv (für Hooks)
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { usePathname } from "next/navigation"; // Hook für die aktuelle URL
+import { siteConfig } from "../config/site"; // Unsere Datenquelle
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname(); // z.B. "/ueber-uns"
+
+  // Hilfsfunktion: Ist dieser Link gerade aktiv?
+  const isActive = (path: string) => pathname === path;
+
   return (
-    // 'sticky top-0' fixiert den Header oben
-    // 'backdrop-blur-md' sorgt für den Milchglas-Effekt
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-amber-100">
+    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-amber-100 shadow-sm transition-all">
       <nav className="max-w-6xl mx-auto px-4 h-20 flex justify-between items-center">
         {/* Logo Bereich */}
-        <Link href="/" className="group flex items-center gap-2">
+        <Link href="/" className="group flex items-center gap-3">
           <span className="text-3xl group-hover:scale-110 transition-transform duration-300">
             🐝
           </span>
@@ -22,43 +30,88 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* Navigation */}
-        <ul className="flex items-center gap-8">
-          <li>
-            <Link
-              href="/"
-              className="text-gray-600 hover:text-amber-600 font-medium transition-colors text-sm uppercase tracking-wide"
-            >
-              Startseite
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/ueber-uns"
-              className="text-gray-600 hover:text-amber-600 font-medium transition-colors text-sm uppercase tracking-wide"
-            >
-              Über uns
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/kontakt"
-              className="text-gray-600 hover:text-amber-600 font-medium transition-colors text-sm uppercase tracking-wide"
-            >
-              Kontakt
-            </Link>
-          </li>
-          <li>
-            {/* Ein Call-to-Action Button direkt im Header */}
-            <Link
-              href="/mitglied-werden"
-              className="hidden md:block bg-amber-100 text-amber-800 px-5 py-2 rounded-full text-sm font-semibold hover:bg-amber-600 hover:text-white transition-all"
-            >
-              Mitglied werden
-            </Link>
-          </li>
+        {/* Desktop Navigation (Dynamisch generiert) */}
+        <ul className="hidden md:flex items-center gap-8">
+          {siteConfig.nav.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className={`text-sm font-medium transition-colors uppercase tracking-wide ${
+                  isActive(item.href)
+                    ? "text-amber-600 font-bold border-b-2 border-amber-600 pb-1" // Aktiver Style
+                    : "text-gray-600 hover:text-amber-600 pb-1 border-b-2 border-transparent" // Inaktiver Style
+                }`}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
+
+        {/* Mobile Menu Button (Hamburger) */}
+        <button
+          className="md:hidden text-amber-900 p-2"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Menü öffnen"
+        >
+          {isMenuOpen ? (
+            // X Icon
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            // Hamburger Icon
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          )}
+        </button>
       </nav>
+
+      {/* Mobile Menu Overlay (Nur sichtbar wenn isMenuOpen === true) */}
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-20 left-0 w-full bg-white border-b border-amber-100 shadow-xl animate-in slide-in-from-top-5">
+          <ul className="flex flex-col p-6 gap-4 text-center">
+            {siteConfig.nav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)} // Menü schließen nach Klick
+                  className={`block text-lg py-2 ${
+                    isActive(item.href)
+                      ? "text-amber-600 font-bold bg-amber-50 rounded-lg"
+                      : "text-gray-600"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
   );
 }

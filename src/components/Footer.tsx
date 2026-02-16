@@ -1,102 +1,100 @@
 import Link from "next/link";
 import React from "react";
+import { siteConfig } from "../config/site"; // Importieren
 
 export default function Footer() {
   return (
-    <footer className="bg-stone-900 text-stone-300 mt-20 border-t-4 border-amber-600">
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        {/* Grid Layout für 3 Spalten */}
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
-          {/* Spalte 1: Über uns */}
-          <div>
-            <h3 className="text-white text-lg font-bold mb-4 flex items-center gap-2">
-              🐝 Imkerverein Neustadt
-            </h3>
-            <p className="text-sm leading-relaxed text-stone-400">
-              Seit 1985 engagieren wir uns für den Naturschutz und die Förderung
-              der Bienenhaltung. Werden Sie Teil unserer Gemeinschaft.
-            </p>
-          </div>
-
-          {/* Spalte 2: Links */}
-          <div>
-            <h4 className="text-white font-semibold mb-4 uppercase tracking-wider text-sm">
-              Navigation
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/"
-                  className="hover:text-amber-400 transition-colors"
-                >
-                  Startseite
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/ueber-uns"
-                  className="hover:text-amber-400 transition-colors"
-                >
-                  Über uns
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/honig-kaufen"
-                  className="hover:text-amber-400 transition-colors"
-                >
-                  Honig kaufen
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/kurse"
-                  className="hover:text-amber-400 transition-colors"
-                >
-                  Imkerkurse
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Spalte 3: Kontakt */}
-          <div>
-            <h4 className="text-white font-semibold mb-4 uppercase tracking-wider text-sm">
-              Kontakt
-            </h4>
-            <ul className="space-y-2 text-sm text-stone-400">
-              <li>Musterstraße 12</li>
-              <li>31535 Neustadt</li>
-              <li className="mt-4">
-                <a
-                  href="mailto:info@imker-neustadt.de"
-                  className="hover:text-amber-400 transition-colors"
-                >
-                  info@imker-neustadt.de
-                </a>
-              </li>
-            </ul>
-          </div>
+    <footer className="bg-stone-900 text-stone-300 mt-auto border-t-4 border-amber-600">
+      {/* Layout Änderung: md:grid-cols-4 statt 3, damit Platz für die neue Spalte ist */}
+      <div className="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-4 gap-8 text-sm">
+        {/* Spalte 1: Info */}
+        <div>
+          <h3 className="text-amber-500 font-bold mb-4 uppercase tracking-wider">
+            {siteConfig.name}
+          </h3>
+          <p className="leading-relaxed mb-4 max-w-xs">
+            Gemeinsam für die Bienen und die Natur in unserer Region. Wir
+            fördern die Imkerei und den Naturschutz.
+          </p>
         </div>
 
-        {/* Trennlinie */}
-        <div className="border-t border-stone-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-stone-500">
-          <p>&copy; {new Date().getFullYear()} Imkerverein Neustadt e.V.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link
-              href="/impressum"
-              className="hover:text-white transition-colors"
-            >
-              Impressum
-            </Link>
-            <Link
-              href="/datenschutz"
-              className="hover:text-white transition-colors"
-            >
-              Datenschutz
-            </Link>
-          </div>
+        {/* Spalte 2: Navigation (Nur Hauptmenü) */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase tracking-wider">
+            Menü
+          </h3>
+          <ul className="space-y-2">
+            {siteConfig.nav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="hover:text-amber-500 transition-colors block w-fit"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
+
+        {/* Spalte 3: Rechtliches (NEU: Separiert) */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase tracking-wider">
+            Rechtliches
+          </h3>
+          <ul className="space-y-2">
+            <li>
+              <Link
+                href="/impressum"
+                className="hover:text-amber-500 transition-colors"
+              >
+                Impressum
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/datenschutz"
+                className="hover:text-amber-500 transition-colors"
+              >
+                Datenschutz
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Spalte 4: Kontakt */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase tracking-wider">
+            Kontakt
+          </h3>
+          <ul className="space-y-3">
+            <li className="flex items-start gap-3">
+              <span>📧</span>
+              <a
+                href="mailto:info@imkerverein-neustadt.de"
+                className="hover:text-amber-500"
+              >
+                info@imkerverein-neustadt.de
+              </a>
+            </li>
+            <li className="flex items-start gap-3">
+              <span>📞</span>
+              <span>05032 / 123 456</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span>📍</span>
+              <span>
+                Musterstraße 12
+                <br />
+                31535 Neustadt
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="bg-stone-950 py-6 text-center text-xs text-stone-500">
+        © {new Date().getFullYear()} {siteConfig.name}. Alle Rechte vorbehalten.
       </div>
     </footer>
   );
