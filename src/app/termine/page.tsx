@@ -1,7 +1,9 @@
 import React from "react";
-import Image from "next/image"; // <--- Image Import wichtig
-import { events } from "@/src/config/events";
-import { EventCard } from "@/src/components/ui/EventCard";
+import Image from "next/image";
+// 👇 1. Das ist der Turbo-Boost: Bild importieren!
+import heroImage from "@/public/images/vitaly-gariev-unsplash.jpg";
+import { events } from "@/config/events";
+import { EventCard } from "@/components/ui/EventCard";
 
 export const metadata = {
   title: "Termine & Veranstaltungen | Imkerverein Neustadt",
@@ -9,27 +11,30 @@ export const metadata = {
 };
 
 export default function TerminePage() {
-  // Sortieren: Zukünftige Termine (optional könnte man vergangene filtern)
+  // Termine sortieren
   const sortedEvents = [...events].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
 
   return (
     <main className="min-h-screen bg-stone-50">
-      {/* 1. HERO HEADER mit Bild */}
+      {/* 1. HERO HEADER */}
       <section className="relative py-24 px-4 text-center overflow-hidden">
         {/* HINTERGRUND BILD */}
         <div className="absolute inset-0 z-0 bg-amber-900">
           <Image
-            src="/images/vitaly-gariev-unsplash.jpg" // Pfad relativ zu 'public'
+            src={heroImage} // <--- Objekt nutzen statt String
             alt="Imker im gelben Schutzanzug prüft Wabe"
             fill
-            className="object-cover brightness-[0.4]" // Abdunklung für Lesbarkeit
-            priority
+            className="object-cover brightness-[0.4]"
+            placeholder="blur" // <--- Das entfernt die 2 Sekunden Wartezeit (Sofort-Vorschau)
+            priority // Lädt mit höchster Priorität
+            sizes="100vw" // Optimierung für Handy-Datenvolumen
+            quality={90}
           />
         </div>
 
-        {/* CREDIT (Unten rechts, dezent) */}
+        {/* CREDIT */}
         <div className="absolute bottom-2 right-4 z-10 text-[10px] text-white/40 hover:text-white/80 transition-colors">
           Foto von{" "}
           <a
@@ -43,9 +48,9 @@ export default function TerminePage() {
           auf Unsplash
         </div>
 
-        {/* INHALT (Titel & Text) */}
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6 text-white">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
+        {/* INHALT */}
+        <div className="relative z-10 max-w-4xl mx-auto space-y-6 text-white animate-in fade-in zoom-in duration-700">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-xl">
             Unsere Termine
           </h1>
           <p className="text-xl text-amber-100 max-w-2xl mx-auto drop-shadow-md font-light leading-relaxed">
@@ -75,7 +80,6 @@ export default function TerminePage() {
           )}
         </div>
 
-        {/* Optional: Hinweis auf Google Kalender oder Export */}
         <div className="text-center pt-8 border-t border-stone-200">
           <p className="text-stone-500 text-sm">
             Änderungen vorbehalten. Bitte prüfen Sie kurz vor der Veranstaltung
